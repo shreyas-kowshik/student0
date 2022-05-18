@@ -46,8 +46,21 @@ WordCount *word_counts = NULL;
  */
 int num_words(FILE* infile) {
   int num_words = 0;
+  char c;
+  do {
+    c = fgetc(infile);
+    if(feof(infile)) break;
+
+    if(c == ' ' || c=='\n') num_words++;
+  } while(1);
 
   return num_words;
+}
+
+void append(char* s, char c) {
+        int len = strlen(s);
+        s[len] = c;
+        s[len+1] = '\0';
 }
 
 /*
@@ -57,6 +70,31 @@ int num_words(FILE* infile) {
  * Useful functions: fgetc(), isalpha(), tolower(), add_word().
  */
 void count_words(WordCount **wclist, FILE *infile) {
+  char *word = (char *) malloc(MAX_WORD_LEN + 1);
+  char c;
+  int cur_len = 0;
+  do {
+    c = fgetc(infile);
+    
+    if (isalpha(c) != 0) {
+      c = tolower(c);
+      if (cur_len < MAX_WORD_LEN) {
+        word[cur_len] = c;
+        cur_len += 1;
+      } else if (cur_len == MAX_WORD_LEN) {
+        word[cur_len] = '\0';
+        add_word(wclist, word);
+        
+        word[0] = c;
+        cur_len = 1;
+      }
+    } else if (cur_len >= 1) {
+      word[cur_len] = '\0';
+      add_word(wclist, word);
+      cur_len = 0;
+    } 
+  } while (c != EOF);
+
 }
 
 /*
@@ -64,7 +102,7 @@ void count_words(WordCount **wclist, FILE *infile) {
  * Useful function: strcmp().
  */
 static bool wordcount_less(const WordCount *wc1, const WordCount *wc2) {
-  return 0;
+  return wc1->count < wc2->count;
 }
 
 // In trying times, displays a helpful message.
@@ -131,11 +169,14 @@ int main (int argc, char *argv[]) {
     // At least one file specified. Useful functions: fopen(), fclose().
     // The first file can be found at argv[optind]. The last file can be
     // found at argv[argc-1].
+    infile = fopen(argv[argc-1], "r");
   }
 
   if (count_mode) {
+    total_words = num_words(infile);
     printf("The total number of words is: %i\n", total_words);
   } else {
+    count_words(&word_counts, infile);
     wordcount_sort(&word_counts, wordcount_less);
 
     printf("The frequencies of each word are: \n");
