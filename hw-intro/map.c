@@ -7,7 +7,6 @@ int foo;
 /* UNCOMMENT THIS LINE for 3.4.3*/
 extern int recur(int i);
 
-
 /* A statically allocated, pre-initialized variable */
 volatile int stuff = 7;
 

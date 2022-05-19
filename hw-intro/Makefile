@@ -1,5 +1,5 @@
 CC?=gcc
-CFLAGS?=-g
+CFLAGS?=-O0 -g3
 BINARIES=map limits
 
 default:
