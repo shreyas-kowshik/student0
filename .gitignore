@@ -1,1 +1,7 @@
 .DS_Store
+**/*.o
+*.o
+**/*.tar.gz
+*.tag.gz
+pintos_install_bin
+proj-pregame/bochs_build/
