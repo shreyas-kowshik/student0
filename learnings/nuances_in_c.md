@@ -70,3 +70,6 @@ group seven: (F,f,O,) symbol is the name of function, file, object or normal sym
 * COLUMN FIVE: the symbol's name.
 
 `objdump -x -d map` prints everything
+
+# Assembly and C code interfacing
+Link : https://www.codeproject.com/Articles/15971/Using-Inline-Assembly-in-C-C

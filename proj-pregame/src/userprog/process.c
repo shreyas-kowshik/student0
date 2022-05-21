@@ -106,8 +106,10 @@ static void start_process(void* file_name_) {
     The assembly code of the function `_start` starts itself by preparing argument passing
     the `main` function and hence the kernel not passing arguments causes a page fault by
     wrapping around addresses to bottom from the top
+
+    This also passes stack-align-0 test
     */
-    if_.esp-=12;
+    if_.esp-=20;
     /********************/
   }
 
