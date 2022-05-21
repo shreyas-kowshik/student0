@@ -98,6 +98,17 @@ static void start_process(void* file_name_) {
     if_.cs = SEL_UCSEG;
     if_.eflags = FLAG_IF | FLAG_MBS;
     success = load(file_name, &if_.eip, &if_.esp);
+    /* Project 0 Change */
+    /*
+    The stack does not allocate enough space for argc and argv (even though they are empty)
+    This causes the stack pointer to be set at 0x00 at the start but still it tries to access
+    it's arguments from it's frame
+    The assembly code of the function `_start` starts itself by preparing argument passing
+    the `main` function and hence the kernel not passing arguments causes a page fault by
+    wrapping around addresses to bottom from the top
+    */
+    if_.esp-=12;
+    /********************/
   }
 
   /* Handle failure with succesful PCB malloc. Must free the PCB */
