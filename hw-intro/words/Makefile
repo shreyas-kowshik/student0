@@ -7,8 +7,9 @@ SOURCES=main.c word_count.c
 LIBRARIES=wc_sort.o
 BINARIES=words
 
-%: %.c
-	$(CC) $(CFLAGS) $(LIBRARIES) -o $@ $^
+# Even if the below line is not there, executable will handle the compilation when running `make`
+# %: %.c
+# 	$(CC) $(CFLAGS) $(LIBRARIES) -o $@ $^
 
 clean:
 	rm -f $(BINARIES)
