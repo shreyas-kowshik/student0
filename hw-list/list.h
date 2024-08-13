@@ -23,7 +23,7 @@
 
       struct foo
         {
-          struct list_elem elem;
+          struct list_elem elem; // need not be the first member in structure
           int bar;
           ...other members...
         };
