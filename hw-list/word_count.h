@@ -51,6 +51,10 @@ typedef struct word_count_list {
   struct list lst;
   pthread_mutex_t lock;
 } word_count_list_t;
+struct wc_thread_struct {
+  word_count_list_t* word_counts;
+  char* filename;
+};
 #else  /* PTHREADS */
 typedef struct list word_count_list_t;
 #endif /* PTHREADS */
